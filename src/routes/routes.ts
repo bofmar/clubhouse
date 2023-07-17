@@ -3,6 +3,8 @@ import express from 'express';
 const router = express.Router();
 
 import * as user_controller from '../controllers/user_controller.js';
+import * as post_controller from '../controllers/post_controller.js';
+import * as general_controller from '../controllers/general.js';
 
 router.get('/', (_req: express.Request, res: express.Response) => {
 	res.render('index', { user: res.locals.currentUser, page: 'Home' });
@@ -21,6 +23,11 @@ router.get('/log-in', (_req: express.Request, res: express.Response) => res.rend
 router.post('/log-in', user_controller.log_in_user);
 
 // LOG OUT
-router.get('/log-out', user_controller.log_out_user);
+router.get('/log-out', general_controller.protected_route, user_controller.log_out_user);
+
+router.get('/create-post', general_controller.protected_route, (_req: express.Request, res: express.Response) => {
+	res.render('create-post-form', { page: 'New Post' });
+});
+router.post('/create-post', general_controller.protected_route, post_controller.create_post);
 
 export default router;

@@ -86,5 +86,5 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 app.use(clubRouter);
 
 app.use((_req: express.Request, res: express.Response) => {
-	res.status(404).render('404', {page: 404});
+	res.status(404).render('404', {page: 404, user: res.locals.currentUser});
 });
