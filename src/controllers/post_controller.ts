@@ -8,10 +8,6 @@ export const create_post = [body('title').trim().isLength({min: 3}).escape(),
 	async (req: express.Request, res: express.Response) => {
 		const errors = validationResult(req);
 
-		if(!res.locals.currentUser) {
-			res.redirect('/login');
-			return
-		}
 		const user = await User.findById(res.locals.currentUser._id);
 
 		const post = new Post({
@@ -32,4 +28,4 @@ export const create_post = [body('title').trim().isLength({min: 3}).escape(),
 			await User.findByIdAndUpdate(user._id, { $push: { posts: newPost._id}});
 			res.redirect('/');
 		}
-}];
+}]; // TODO handle the form better

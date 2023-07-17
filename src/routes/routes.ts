@@ -9,10 +9,6 @@ import * as general_controller from '../controllers/general.js';
 router.get('/', (_req: express.Request, res: express.Response) => {
 	res.render('index', { user: res.locals.currentUser, page: 'Home' });
 });
-// TODO delete
-router.get('/nope', (req: express.Request, res: express.Response) => {
-	res.render('nope', { user: req.user, page: 'Home' });
-});
 
 // SIGN UP
 router.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form'));
@@ -25,6 +21,7 @@ router.post('/log-in', user_controller.log_in_user);
 // LOG OUT
 router.get('/log-out', general_controller.protected_route, user_controller.log_out_user);
 
+// POSTS ROUTES
 router.get('/create-post', general_controller.protected_route, (_req: express.Request, res: express.Response) => {
 	res.render('create-post-form', { page: 'New Post' });
 });
