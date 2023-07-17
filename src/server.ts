@@ -9,11 +9,11 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import User from './models/user.js';
 import bcrypt from 'bcryptjs';
 import session from 'express-session';
+import clubRouter from './routes/routes.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
-const PASSPHRASE = process.env.SECRET_MESSAGE;
 const SECRET = process.env.SECRET;
 const MONGO_URI = process.env.MONGO_URI;
 const __filename = url.fileURLToPath(import.meta.url);
@@ -81,47 +81,5 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 	res.locals.currentUser = req.user;
 	next();
 });
-
-app.get('/', (_req: express.Request, res: express.Response) => {
-	res.render('index', { user: res.locals.currentUser, msg: PASSPHRASE, page: 'Home' });
-});
-
-app.get('/nope', (req: express.Request, res: express.Response) => {
-	res.render('nope', { user: req.user, msg: PASSPHRASE, page: 'Home' });
-});
-
-app.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form'));
-app.post('/sign-up', async (req: express.Request, res: express.Response, next) => {
-	try {
-		bcrypt.hash(req.body.password, 10, async(error, hashedPassword) => {
-			if(error) {
-				console.log(error);
-				res.status(400).redirect('/');
-			}
-
-			const user = new User({
-				username: req.body.username,
-				password: hashedPassword
-			});
-			await user.save();
-			res.status(200).redirect('/');
-		});
-	} catch(err) {
-		return next(err);
-	}
-});
-
-app.get('/log-in', (_req: express.Request, res: express.Response) => res.render('log-in-form'));
-app.post('/log-in', passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/nope',
-}));
-
-app.get('/log-out', (req: express.Request, res: express.Response, next) => {
-	req.logout(function (err) {
-		if(err) {
-			return next(err);
-		}
-		res.redirect('/');
-	});
-});
+// Normal routes
+app.use(clubRouter);
