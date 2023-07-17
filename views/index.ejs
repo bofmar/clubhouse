@@ -3,6 +3,10 @@
 	<%- include('partials/navbar') %>
 	<main>
 		<h1><%= msg %></h1>
+		<% if(user) { %>
+		<h1>Hi <%= user.username %></hi>
+		<a href='/log-out'>Log Out</a>
+		<% } %>
 	</main>
 </body>
 </html>

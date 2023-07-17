@@ -5,7 +5,6 @@ import { DateTime } from 'luxon';
 const Schema = mongoose.Schema;
 
 export interface IPost {
-	_id: string;
 	title: string;
 	body: string;
 	date_created: Date;
@@ -13,7 +12,6 @@ export interface IPost {
 }
 
 const PostSchema = new Schema<IPost>({
-	_id: String,
 	title: {type: String, required: true, minlength: 3},
 	body: {type: String, required: true, minlength: 4},
 	date_created: {type: Date, default: Date.now},
