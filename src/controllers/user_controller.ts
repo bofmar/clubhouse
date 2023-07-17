@@ -21,7 +21,7 @@ export const sign_up_user = async (req: express.Request, res: express.Response, 
 	} catch(err) {
 		return next(err);
 	}
-}
+} // TODO MAKE SURE NOT TO CREATE USERS WITH THE SAME USERNAME, VALIDATE THE FORM
 
 export const log_in_user = passport.authenticate('local', {
 	successRedirect: '/',

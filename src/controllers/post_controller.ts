@@ -25,7 +25,7 @@ export const create_post = [body('title').trim().isLength({min: 3}).escape(),
 			return;
 		} else {
 			const newPost = await post.save();
-			await User.findByIdAndUpdate(user._id, { $push: { posts: newPost._id}});
+			await User.findByIdAndUpdate(user._id, { $push: { posts_ids: `${newPost._id}`}});
 			res.redirect('/');
 		}
 }]; // TODO handle the form better
