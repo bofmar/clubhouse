@@ -64,6 +64,7 @@ mongoose.connect(MONGO_URI as string).then(_result => {
 	console.log(error);
 });
 
+// Set up the middleware
 app.use(session({
 	secret: SECRET as string,
 	resave: false,
@@ -83,3 +84,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 });
 // Normal routes
 app.use(clubRouter);
+
+app.use((_req: express.Request, res: express.Response) => {
+	res.status(404).render('404', {page: 404});
+});
