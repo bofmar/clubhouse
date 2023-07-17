@@ -31,5 +31,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(ROOT, 'public')));
 
 app.get('/', (_req: express.Request, res: express.Response) => {
-	res.render('index', { msg: PASSPHRASE });
+	res.render('index', { msg: PASSPHRASE, page: 'Home' });
 });
