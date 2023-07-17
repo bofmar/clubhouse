@@ -23,7 +23,7 @@ router.get('/log-out', general_controller.protected_route, user_controller.log_o
 
 // POSTS ROUTES
 router.get('/create-post', general_controller.protected_route, (_req: express.Request, res: express.Response) => {
-	res.render('create-post-form', { page: 'New Post', user: res.locals.currentUser});
+	res.render('create-post-form', { page: 'New Post', user: res.locals.currentUser, post: undefined, errors: undefined});
 });
 router.post('/create-post', general_controller.protected_route, post_controller.create_post);
 

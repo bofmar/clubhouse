@@ -4,10 +4,17 @@
   <h1>New Post</h1>
   <form action="" method="POST">
     <label for="title">Title</label>
-    <input name="title" placeholder="title" type="text" />
+	<input name="title" placeholder="An interesting title" type="text" required value=<%= post ? post.title : '' %>>
     <label for="body">Body</label>
-    <textarea name="body"></textarea>
+	<textarea name="body" maxlength="500" placeholder="Your post's body" required cols="80" rows="10"><%= post ? post.body : '' %></textarea>
     <button>Submit</button>
   </form>
+  <% if(errors) { %>
+  <ul>
+	  <% errors.forEach(error => { %>
+	  <li><%= error.msg %></li>
+	  <% }) %>
+  </ul>
+  <% } %>
 </body>
 </html>
