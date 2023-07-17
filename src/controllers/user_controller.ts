@@ -11,6 +11,13 @@ export const sign_up_user = async (req: express.Request, res: express.Response, 
 				res.status(400).redirect('/');
 			}
 
+			const userExist = await User.findOne({username: req.body.username});
+			if(userExist) {
+				//TODO send user back to the form
+				res.status(401).redirect('/');
+				return;
+			}
+
 			const user = new User({
 				username: req.body.username,
 				password: hashedPassword
@@ -21,11 +28,11 @@ export const sign_up_user = async (req: express.Request, res: express.Response, 
 	} catch(err) {
 		return next(err);
 	}
-} // TODO MAKE SURE NOT TO CREATE USERS WITH THE SAME USERNAME, VALIDATE THE FORM
+} // TODO VALIDATE THE FORM. HANDLE SENDING USERS BACK TO THE FORM
 
 export const log_in_user = passport.authenticate('local', {
 	successRedirect: '/',
-	failureRedirect: '/nope',
+	failureRedirect: '/log-in',
 });
 
 export const log_out_user = (req: express.Request, res: express.Response, next: express.NextFunction) => {
