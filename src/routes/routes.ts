@@ -11,11 +11,11 @@ router.get('/', (_req: express.Request, res: express.Response) => {
 });
 
 // SIGN UP
-router.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form'));
+router.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form', { user: res.locals.currentUser, page: 'Sign-Up'}));
 router.post('/sign-up', user_controller.sign_up_user);
 
 // LOG IN
-router.get('/log-in', (_req: express.Request, res: express.Response) => res.render('log-in-form'));
+router.get('/log-in', (_req: express.Request, res: express.Response) => res.render('log-in-form', { user: res.locals.currentUser, page: 'Log-in'}));
 router.post('/log-in', user_controller.log_in_user);
 
 // LOG OUT
@@ -23,7 +23,7 @@ router.get('/log-out', general_controller.protected_route, user_controller.log_o
 
 // POSTS ROUTES
 router.get('/create-post', general_controller.protected_route, (_req: express.Request, res: express.Response) => {
-	res.render('create-post-form', { page: 'New Post' });
+	res.render('create-post-form', { page: 'New Post', user: res.locals.currentUser});
 });
 router.post('/create-post', general_controller.protected_route, post_controller.create_post);
 
