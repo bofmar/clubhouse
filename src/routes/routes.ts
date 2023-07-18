@@ -11,7 +11,7 @@ router.get('/', (_req: express.Request, res: express.Response) => {
 });
 
 // SIGN UP
-router.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form', { user: res.locals.currentUser, page: 'Sign-Up'}));
+router.get('/sign-up', (_req: express.Request, res: express.Response) => res.render('sign-up-form', { user: res.locals.currentUser, page: 'Sign-Up', errors: undefined}));
 router.post('/sign-up', user_controller.sign_up_user);
 
 // LOG IN
