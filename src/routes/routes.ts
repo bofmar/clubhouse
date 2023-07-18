@@ -21,6 +21,10 @@ router.post('/log-in', user_controller.log_in_user);
 // LOG OUT
 router.get('/log-out', general_controller.protected_route, user_controller.log_out_user);
 
+// CHANGE ROLE
+router.get('/role-change', general_controller.protected_route, (_req: express.Request, res: express.Response) => res.render('change-role-form', {page: 'Become Admin', errors: undefined, user: res.locals.currentUser}));
+router.post('/role-change', general_controller.protected_route, user_controller.change_status);
+
 // POSTS ROUTES
 router.get('/create-post', general_controller.protected_route, (_req: express.Request, res: express.Response) => {
 	res.render('create-post-form', { page: 'New Post', user: res.locals.currentUser, post: undefined, errors: undefined});

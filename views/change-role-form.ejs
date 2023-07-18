@@ -1,0 +1,18 @@
+<%- include('partials/head') %>
+<body>
+	<%- include('partials/navbar') %>
+  <h1>Change Role</h1>
+  <form action="" method="POST">
+    <label for="secret">Say the secret phrase to achieve admin status</label>
+	<input name="secret" placeholder="It's a secret to everybody!" type="text" required >
+    <button>DO IT!</button>
+  </form>
+  <% if(errors) { %>
+  <ul>
+	  <% errors.forEach(error => { %>
+	  <li><%= error.msg %></li>
+	  <% }) %>
+  </ul>
+  <% } %>
+</body>
+</html>

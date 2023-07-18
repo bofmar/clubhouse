@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
 import passport from 'passport';
 import { body, validationResult } from 'express-validator';
+import dotenv from 'dotenv';
 
 export const sign_up_user = [
 	body('username', 'Invalid Username - Username must be at least 2 characters long')
@@ -68,4 +69,21 @@ export const log_out_user = (req: express.Request, res: express.Response, next: 
 		}
 		res.redirect('/');
 	});
+}
+
+export const change_status = async (req: express.Request, res: express.Response) => {
+	dotenv.config();
+	const secret: string = process.env.SECRET_MESSAGE as string;
+	
+	if(secret !== req.body.secret) {
+		res.render('change-role-form', {
+			page: 'Become Admin',
+			user: res.locals.currentUser,
+			errors: [{msg: 'That was not the secret phrase!'}]
+		});
+		return;
+	}
+
+	await User.findOneAndUpdate({username: res.locals.currentUser.username}, {role: 'ADMIN'}).exec();
+	res.redirect('/');
 }
