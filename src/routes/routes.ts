@@ -5,9 +5,11 @@ const router = express.Router();
 import * as user_controller from '../controllers/user_controller.js';
 import * as post_controller from '../controllers/post_controller.js';
 import * as general_controller from '../controllers/general.js';
+import Post, { IPost } from '../models/post.js';
 
-router.get('/', (_req: express.Request, res: express.Response) => {
-	res.render('index', { user: res.locals.currentUser, page: 'Home' });
+router.get('/', async (_req: express.Request, res: express.Response) => {
+	const posts: Array<IPost> = await Post.find().populate('user').exec();
+	res.render('index', { user: res.locals.currentUser, page: 'Home', posts: posts});
 });
 
 // SIGN UP

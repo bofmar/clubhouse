@@ -3,9 +3,24 @@
 	<%- include('partials/navbar') %>
 	<main>
 		<% if(user) { %>
-		<h1>Hi <%= user.username %></hi>
-		<a href='/create-post'>+</>
+		<h1>Hi <%= user.username %>! Welcome back to the Clubhouse!</h1>
+		<a href='/create-post'>+</a>
 		<% } %>
+		<div class='posts-wrapper'>
+		<% posts.forEach(post => { %>
+			<div class='post'>
+				<h2><%= post.title %></h2>
+				<p><%= post.body %></p>
+				<% if(user) { %>
+					<p class='created-by'>Created by <%= post.user.username %></p>
+					<p class='date'><%= post.date_created_formated %></p>
+					<% if(user.role === 'ADMIN' || post.user.username === user.username) { %>
+						<a href=<%= `/delete/${post._id}` %>>Delete</a>
+					<% } %>
+				<% } %>
+			</div>
+		<% }) %>
+		</div>
 	</main>
 </body>
 </html>
