@@ -26,8 +26,9 @@ export const sign_up_user = [
 				if(userExist) {
 					res.render('sign-up-form', {
 						page: 'Sign Up',
-						user: {username: req.body.username},
+						username: req.body.username,
 						errors: [{msg: 'Invalid Username - Someone is already using this username. Please choose another.'}],
+						user: undefined, 
 					});
 					return;
 				}
@@ -35,8 +36,9 @@ export const sign_up_user = [
 				if(!validationErrors.isEmpty()) {
 					res.render('sign-up-form', {
 						page: 'Sign Up',
-						user: {username: req.body.username},
+						username: req.body.username,
 						errors: validationErrors.array(),
+						user: undefined, 
 					});
 					return;
 				}
